@@ -1,3 +1,5 @@
+# cd C:\Users\danni\Documents\GitHub\trading-dashboard
+
 #https://www.youtube.com/watch?v=0ESc1bh3eIg
 #15:00
 
@@ -32,5 +34,6 @@ def main():
         for message in data['messages']:
             st.write(message['created_at'], ': ', message['body'])
             st.text("") # add blank line to help readability
+            
 if __name__ =='__main__':
   main() #calling the main method
