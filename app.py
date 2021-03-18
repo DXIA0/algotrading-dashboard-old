@@ -34,6 +34,6 @@ def main():
         for message in data['messages']:
             st.write(message['created_at'], ': ', message['body'])
             st.text("") # add blank line to help readability
-            
+
 if __name__ =='__main__':
   main() #calling the main method
