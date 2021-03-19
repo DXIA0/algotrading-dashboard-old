@@ -1,0 +1,7 @@
+requests
+bs4
+urllib3
+html5lib
+nltk
+matplotlib
+lxml

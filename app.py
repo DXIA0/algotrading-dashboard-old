@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 import requests
 import tweepy
+import pandas as pd
 
 def pull_stocktwits():
     symbol = st.text_input('Symbol Search', value ='TSLA', max_chars=5)
@@ -25,7 +26,7 @@ def main():
     st.title('XDashboard')
 
     st.sidebar.title('Navigation')
-    option = st.sidebar.selectbox('Dashboard selection', ('News', 'Trading', 'Search'))
+    option = st.sidebar.selectbox('Dashboard selection', ('News', 'Portfolio', 'Trading', 'Search'))
 
     st.header(option) #display dash name
     st.text("")
@@ -33,6 +34,34 @@ def main():
 
     #if option == 'News':
         #pull global news from data file
+
+    if option == 'Portfolio':
+
+        # View Data
+
+        df_news = pd.read_csv('COPY_portfolio_news_data.csv')
+
+        st.dataframe(df_news)
+
+        unique_ticker = df_news['Ticker'].unique().tolist()
+        news_dict = {name: df_news.loc[df_news['Ticker'] == name] for name in unique_ticker}
+
+        values = []
+        for ticker in tickers:
+            dataframe = news_dict[ticker]
+            dataframe = dataframe.set_index('Ticker')
+            dataframe = dataframe.drop(columns = ['Headline'])
+
+            mean = round(dataframe['compound'].mean(), 2)
+            values.append(mean)
+
+        df_sentiment = pd.DataFrame(list(zip(tickers, values)), columns =['Ticker', 'Mean Sentiment'])
+        df_sentiment = df_sentiment.set_index('Ticker')
+        df_sentiment = df_sentiment.sort_values('Mean Sentiment', ascending=False)
+
+        print ('\n')
+        print (df_sentiment)
+
 
 
 
