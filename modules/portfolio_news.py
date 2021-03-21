@@ -4,9 +4,16 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
+import os
 from urllib.request import urlopen
 from urllib.request import Request
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+def get_filepath(filename):
+    root_dir = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
+    data_dir =  root_dir + '\data'
+    file_path = os.path.join(data_dir, f'{filename}.csv')
+    return(file_path)
 
 import nltk
 nltk.download('vader_lexicon')
@@ -60,10 +67,14 @@ def main():
     news = news.join(df_scores, rsuffix='_right')
 
     news.Headline = news.Headline.str.replace(',', '') #commas will cause errors with csv
-    news.to_csv('portfolio_news_data.csv', index=False)
 
+    filepath = get_filepath('portfolio_news_data')
+
+    news.to_csv(f'{filepath}', index=False)
+
+    print('Headlines module run successfully ')
 
 """Run function"""
 
-if __name__ =='__main__':
+if __name__ =='__main__' or '__init__': #if called or initialised as a package
   main() #calling the main method

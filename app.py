@@ -1,4 +1,4 @@
-# cd C:\Users\danni\Documents\GitHub\trading-dashboard
+#cd C:\Users\Xiao_D\Documents\GitHub\trading-dashboard
 
 #https://www.youtube.com/watch?v=0ESc1bh3eIg
 #15:00

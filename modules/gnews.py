@@ -4,7 +4,16 @@
 from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
 import requests
+import os
 from datetime import datetime
+
+
+def get_filepath(filename):
+    root_dir = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
+    data_dir =  root_dir + '\data'
+    file_path = os.path.join(data_dir, f'{filename}.csv')
+    return(file_path)
+
 
 root = 'https://www.google.com/' #root query
 link = 'https://www.google.com/search?q=stock+market&tbs=qdr:d,sbd:1&tbm=nws&sxsrf=ALeKk01Z7V8cfTmouyE_tD0qJd7e4vkpqQ:1615807067965&source=lnt&sa=X&ved=0ahUKEwiUzb6ylrLvAhWXQhUIHQseBL0QpwUIKA&biw=1536&bih=722&dpr=1.25'
@@ -49,7 +58,10 @@ def news(link):
 
       #begin writing to CSV file
       #document = open('data.csv', 'a') #a = read and write
-      document = open('gnews_data.csv', 'a') #a = read and write
+
+      filepath = get_filepath('gnews_data')
+
+      document = open(f'{filepath}', 'a') #a = read and write
       document.write('{}, {}, {}, {}, {} \n'.format(title, date, article_time, bio, link))
       document.close()
 
@@ -60,7 +72,7 @@ def news(link):
     link = root + next
 
     try: news(link) #run recursively
-    except: print('Module run successfully') #until last webpage and then print warning
+    except: print('GNews module run successfully') #until last webpage and then print warning
 
 
 def main():
@@ -69,5 +81,5 @@ def main():
 
 """Run function"""
 
-if __name__ =='__main__':
+if __name__ =='__main__' or '__init__': #if called or initialised as a package
   main() #calling the main method
