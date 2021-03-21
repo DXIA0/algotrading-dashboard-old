@@ -13,3 +13,5 @@ html5lib
 nltk
 matplotlib
 lxml
+
+nltk.download('vader_lexicon')

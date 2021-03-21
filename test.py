@@ -1,4 +1,8 @@
 #gnews is appending but also continues to repeat the same information
+#C:\Users\danni\Documents\GitHub\trading-dashboard
+# conda create --name myenv
+# pip install -r requirements.txt
+#conda create --name new --clone original
 
 import os
 import sys
