@@ -5,6 +5,7 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
 import requests
 import os
+import pandas as pd
 from datetime import datetime
 
 
@@ -64,6 +65,8 @@ def news(link):
       document = open(f'{filepath}', 'a') #a = read and write
       document.write('{}, {}, {}, {}, {} \n'.format(title, date, article_time, bio, link))
       document.close()
+
+      pd.read_csv(f'{filepath}').drop_duplicates().to_csv(f'{filepath}', index=False) #open and drop duplicates
 
     #go to next page of results
     next = soup.find('a', attrs={'aria-label': 'Next page'}) #find the next page attribute

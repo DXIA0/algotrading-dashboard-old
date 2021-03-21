@@ -16,7 +16,7 @@ def get_filepath(filename):
     return(file_path)
 
 import nltk
-nltk.download('vader_lexicon')
+#nltk.download('vader_lexicon')
 
 def main():
     # Parameters------------------------
@@ -70,7 +70,8 @@ def main():
 
     filepath = get_filepath('portfolio_news_data')
 
-    news.to_csv(f'{filepath}', index=False)
+    pd.read_csv(f'{filepath}').append(news).drop_duplicates().to_csv(f'{filepath}', index=False) #append new lines to file
+    #news.to_csv(f'{filepath}', index=False)
 
     print('Headlines module run successfully ')
 

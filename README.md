@@ -1,4 +1,4 @@
-# Financial Dashboard 
+# Financial Dashboard
 
 **File Structure**
 - **Modules**: Contains back-end processing and data outputs
@@ -7,3 +7,6 @@
 - **app.py**: streamlit python file to run
 - **requirements.txt**: pip install requirements
 - **setup.sh**: heroku config file
+
+**Running App**
+- portfolio_news.py: Line 19 download NLTK disabled for testing but will need to be enabled for implementation
