@@ -7,7 +7,7 @@ import requests
 import os
 import pandas as pd
 from datetime import datetime
-
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 def get_filepath(filename):
     root_dir = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
@@ -18,6 +18,18 @@ def get_filepath(filename):
 
 root = 'https://www.google.com/' #root query
 link = 'https://www.google.com/search?q=stock+market&tbs=qdr:d,sbd:1&tbm=nws&sxsrf=ALeKk01Z7V8cfTmouyE_tD0qJd7e4vkpqQ:1615807067965&source=lnt&sa=X&ved=0ahUKEwiUzb6ylrLvAhWXQhUIHQseBL0QpwUIKA&biw=1536&bih=722&dpr=1.25'
+
+def view_gnews_sentiment(): #grab sentiment and most popular names
+    # View Data
+    gnews_data_filename = get_filepath('gnews_data')
+    df_gnews = pd.read_csv(f'{gnews_data_filename}', sep='\t', names=["Headline", "Date", "Rel. Date", "Body", "Link"])
+
+    analyzer = SentimentIntensityAnalyzer() # init sent analysis
+
+    overall_sentiment_body = df_gnews['Body'].apply(analyzer.polarity_scores).tolist() #sentiment over all news body texts
+    df_body_scores = pd.DataFrame(overall_sentiment_body) #convert to pd df
+    mean_body_score = round(df_body_scores['compound'].mean(), 2) #tally all in compound column and average
+    return(mean_body_score)
 
 """Write recursive scrape page function"""
 

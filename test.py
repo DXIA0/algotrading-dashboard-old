@@ -7,6 +7,7 @@
 import os
 import sys
 
+
 def get_filepath(filename):
     root_dir = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
     data_dir =  root_dir + '\modules\data'
@@ -23,5 +24,8 @@ data_dir =  root_dir + '\modules\data'
 sys.path.insert(0, f'{mod_dir}') #change directory to access the module file
 
 #import modules and autorun
-import gnews
-import portfolio_news
+#import gnews
+#import portfolio_news
+
+import pandas as pd
+from nltk.sentiment.vader import SentimentIntensityAnalyzer

@@ -18,6 +18,28 @@ def get_filepath(filename):
 import nltk
 #nltk.download('vader_lexicon')
 
+def view_porfolio_sentiment():
+    # View Data
+    portfolio_data_filename = get_filepath('portfolio_news_data')
+    df_news = pd.read_csv(f'{portfolio_data_filename}')
+
+    unique_tickers = df_news['Ticker'].unique().tolist()
+    news_dict = {name: df_news.loc[df_news['Ticker'] == name] for name in unique_tickers}
+
+    values = []
+    for ticker in unique_tickers:
+        dataframe = news_dict[ticker]
+        dataframe = dataframe.set_index('Ticker')
+        dataframe = dataframe.drop(columns = ['Headline'])
+
+        mean = round(dataframe['compound'].mean(), 2)
+        values.append(mean)
+
+    df_sentiment = pd.DataFrame(list(zip(unique_tickers, values)), columns =['Ticker', 'Mean Sentiment'])
+    df_sentiment = df_sentiment.set_index('Ticker')
+    df_sentiment = df_sentiment.sort_values('Mean Sentiment', ascending=False)
+    return(df_news, df_sentiment)
+
 def main():
     # Parameters------------------------
     n = 3 #the # of article headlines displayed per ticker to get a flavour

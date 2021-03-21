@@ -59,36 +59,20 @@ def main():
         import portfolio_news
         st.text(f'Last refreshed: {date}')
 
-    #if option == 'News':
+    if option == 'News':
+        import gnews
         #pull global news from data file
+        overall_body_score = gnews.view_gnews_sentiment()
+        st.text('Overall market sentiment score*: ', overall_body_score)
+        st.text('*Based on last 24hr news (GoogleNews)')
 
     if option == 'Portfolio':
-
-        # View Data
-        portfolio_data_filename = get_filepath('portfolio_news_data')
-
-        df_news = pd.read_csv(f'{portfolio_data_filename}')
-
-        st.dataframe(df_news)
-
-        unique_tickers = df_news['Ticker'].unique().tolist()
-        news_dict = {name: df_news.loc[df_news['Ticker'] == name] for name in unique_ticker}
-
-        values = []
-        for ticker in unique_tickers:
-            dataframe = news_dict[ticker]
-            dataframe = dataframe.set_index('Ticker')
-            dataframe = dataframe.drop(columns = ['Headline'])
-
-            mean = round(dataframe['compound'].mean(), 2)
-            values.append(mean)
-
-        df_sentiment = pd.DataFrame(list(zip(tickers, values)), columns =['Ticker', 'Mean Sentiment'])
-        df_sentiment = df_sentiment.set_index('Ticker')
-        df_sentiment = df_sentiment.sort_values('Mean Sentiment', ascending=False)
-
-        print ('\n')
-        print (df_sentiment)
+        import portfolio_news #run module to ensure functions imported
+        #run view data function from portfolio news module
+        df_news, df_sentiment = portfolio_news.view_porfolio_sentiment()
+        #st.dataframe(df_news)
+        st.text('Finviz Headline Sentiment')
+        st.dataframe(df_sentiment)
 
     #if  option == 'Trading':
     if  option == 'Search':
