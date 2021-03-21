@@ -8,6 +8,21 @@ import pandas as pd
 import requests
 import tweepy
 import pandas as pd
+import sys
+import os
+
+''' Assign root folders '''
+root_dir = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
+mod_dir =  root_dir + '\modules'
+data_dir =  root_dir + '\modules\data'
+
+sys.path.insert(0, f'{mod_dir}') #change directory to access the module file
+
+#import modules and autorun
+import gnews
+import portfolio_news
+
+sys.path.insert(0, f'{root_dir}') #change back to root directory
 
 def pull_stocktwits():
     symbol = st.text_input('Symbol Search', value ='TSLA', max_chars=5)
@@ -61,9 +76,6 @@ def main():
 
         print ('\n')
         print (df_sentiment)
-
-
-
 
     #if  option == 'Trading':
     if  option == 'Search':

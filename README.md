@@ -10,3 +10,4 @@
 
 **Running App**
 - portfolio_news.py: Line 19 download NLTK disabled for testing but will need to be enabled for implementation
+- environment streamlit_only working but it is just requirements.txt
