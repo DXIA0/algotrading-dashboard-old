@@ -8,6 +8,10 @@
 - (News Outlets): Google News, Finimize, StockTwits 
 - (Social Media) Reddit: WallStreetBets, Twitter 
 
+**ToDo**
+- database file management: https://www.youtube.com/watch?v=xBbK2kvHXwE
+- WSB integration
+- trading bot
 
 **File Structure**
 - **Modules**: Contains back-end processing and data outputs
