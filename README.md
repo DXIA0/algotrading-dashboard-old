@@ -1,5 +1,14 @@
 # Financial Dashboard
 
+** Features **
+- Automatic web scraping for news
+- AI driven sentiment analysis (key companies discussed, bull/bear sentiment)
+
+*Sources*
+_- (News Outlets): Google News, Finimize, StockTwits 
+- (Social Media) Reddit: WallStreetBets, Twitter 
+
+
 **File Structure**
 - **Modules**: Contains back-end processing and data outputs
 - **Procfile**: shell command to run app and setup file
