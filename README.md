@@ -4,8 +4,8 @@
 - Automatic web scraping for news
 - AI driven sentiment analysis (key companies discussed, bull/bear sentiment)
 
-*Sources
-*- (News Outlets): Google News, Finimize, StockTwits 
+Sources
+- (News Outlets): Google News, Finimize, StockTwits 
 - (Social Media) Reddit: WallStreetBets, Twitter 
 
 
