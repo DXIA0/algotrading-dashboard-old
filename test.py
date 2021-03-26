@@ -4,6 +4,17 @@
 # pip install -r requirements.txt
 #conda create --name new --clone original
 
+
+
+'''https://stackoverflow.com/questions/66588446/python-web-scraping-how-do-i-avoid-scraping-duplicates-for-my-database
+
+https://stackoverflow.com/questions/62306020/prevent-duplicate-rows-in-mysql-database
+
+https://stackoverflow.com/questions/41860250/scraping-dynamic-data-and-avoiding-duplicates-with-bs4-selenium-in-python
+
+https://stackoverflow.com/questions/61079969/when-storing-scrapy-results-to-database-how-to-avoid-storing-duplicates
+'''
+
 import os
 import sys
 
