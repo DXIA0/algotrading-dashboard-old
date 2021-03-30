@@ -15,6 +15,9 @@ matplotlib
 lxml
 yfinance
 jupyterlab
+
+fastapi
+uvicorn
 nltk.download('vader_lexicon')
 #conda install jupyterlab
 #conda install nb_conda
