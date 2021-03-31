@@ -60,11 +60,29 @@ def main():
         st.text(f'Last refreshed: {date}')
 
     if option == 'News':
-        import gnews
+        #import gnews
         #pull global news from data file
-        overall_body_score = gnews.view_gnews_sentiment()
-        st.text('Overall market sentiment score*: ', overall_body_score)
-        st.text('*Based on last 24hr news (GoogleNews)')
+
+        st.text('S&P 500 Map Weekly')
+        st.image(f'https://finviz.com/futures_charts.ashx?t=ES')
+        #https://finviz.com/map.ashx?t=sec&st= #dail;y
+        st.text("")
+
+        st.text('Nasdaq')
+        st.image(f'https://finviz.com/futures_charts.ashx?t=NQ')
+        st.text("") # add blank line to help readability
+
+        st.text('Dow Jones Industrial Average')
+        st.image(f'https://finviz.com/futures_charts.ashx?t=YM')
+        st.text("") # add blank line to help readability
+
+        st.text('Volatility VIX')
+        st.image(f'https://finviz.com/futures_charts.ashx?p=d1&t=VX')
+        st.text("") # add blank line to help readability
+
+        #overall_body_score = gnews.view_gnews_sentiment()
+        #st.text('Overall market sentiment score*: ', overall_body_score)
+        #st.text('*Based on last 24hr news (GoogleNews)')
 
     if option == 'Portfolio':
         import portfolio_news #run module to ensure functions imported
