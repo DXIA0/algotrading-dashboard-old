@@ -16,9 +16,5 @@ lxml
 yfinance
 jupyterlab
 ta
-
 fastapi
 uvicorn
-nltk.download('vader_lexicon')
-#conda install jupyterlab
-#conda install nb_conda
