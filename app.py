@@ -24,7 +24,8 @@ root_dir = os.path.dirname(os.path.abspath(__file__)) # This is your Project Roo
 mod_dir =  root_dir + '\modules'
 data_dir =  root_dir + '\modules\data'
 
-sys.path.insert(0, f'{mod_dir}') #change directory to access the module file
+#sys.path.insert(0, f'{mod_dir}') #change directory to access the module file
+sys.path.append('\modules')
 
 #sys.path.insert(0, f'{root_dir}') #change back to root directory
 
@@ -75,6 +76,9 @@ def main():
 
     if option == 'News':
         #import gnews #pull global news from data file,  get s&p500, nasdaq, djia, vix
+        root_dir = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
+
+        st.text(root_dir)
 
         #overall_body_score = gnews.view_gnews_sentiment()
         #st.text('Overall market sentiment score*: ', overall_body_score)
