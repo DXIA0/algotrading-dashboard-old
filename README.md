@@ -1,5 +1,11 @@
 # Financial Dashboard
 
+To run 
+nltk.download('vader_lexicon')
+#conda install jupyterlab
+#conda install nb_conda
+
+
 **Features**
 - Automatic web scraping for news
 - AI driven sentiment analysis (key companies discussed, bull/bear sentiment)
