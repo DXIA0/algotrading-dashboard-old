@@ -82,12 +82,12 @@ def main():
 
         st.text('To Do')
 
-        import portfolio_news #run module to ensure functions imported
+        #import portfolio_news #run module to ensure functions imported
         #run view data function from portfolio news module
-        df_news, df_sentiment = portfolio_news.view_porfolio_sentiment()
+        #df_news, df_sentiment = portfolio_news.view_porfolio_sentiment()
         #st.dataframe(df_news)
-        st.text('Finviz Headline Sentiment')
-        st.dataframe(df_sentiment)
+        #st.text('Finviz Headline Sentiment')
+        #st.dataframe(df_sentiment)
 
 
     #if  option == 'Trading':
