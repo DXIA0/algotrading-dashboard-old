@@ -15,6 +15,7 @@ matplotlib
 lxml
 yfinance
 jupyterlab
+ta
 
 fastapi
 uvicorn
