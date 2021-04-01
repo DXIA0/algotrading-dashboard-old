@@ -13,7 +13,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import gmtime, strftime
 import datetime
-import sys
 
 import yfinance as yf # https://pypi.org/project/yfinance/
 from ta.volatility import BollingerBands
@@ -76,8 +75,6 @@ def main():
 
     if option == 'News':
         #import gnews #pull global news from data file,  get s&p500, nasdaq, djia, vix
-        #sys.path.insert(0, f'{mod_dir}')
-        sys.path.append('\modules') #access modules folder
 
         #overall_body_score = gnews.view_gnews_sentiment()
         #st.text('Overall market sentiment score*: ', overall_body_score)
@@ -85,7 +82,7 @@ def main():
 
         st.text('To Do')
 
-        import portfolio_news #run module to ensure functions imported
+        #import portfolio_news #run module to ensure functions imported
         #run view data function from portfolio news module
         #df_news, df_sentiment = portfolio_news.view_porfolio_sentiment()
         #st.dataframe(df_news)

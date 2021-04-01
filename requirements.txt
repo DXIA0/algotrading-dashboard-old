@@ -18,3 +18,5 @@ jupyterlab
 ta
 fastapi
 uvicorn
+texttable
+bs4
