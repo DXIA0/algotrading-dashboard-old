@@ -13,6 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import gmtime, strftime
 import datetime
+import sys
 
 import yfinance as yf # https://pypi.org/project/yfinance/
 from ta.volatility import BollingerBands
@@ -25,8 +26,6 @@ mod_dir =  root_dir + '\modules'
 data_dir =  root_dir + '\modules\data'
 
 #sys.path.insert(0, f'{mod_dir}') #change directory to access the module file
-sys.path.append('\modules')
-
 #sys.path.insert(0, f'{root_dir}') #change back to root directory
 
 def get_filepath(filename):
@@ -65,20 +64,20 @@ def main():
     with col4:
         st.text('')
         if st.button('Refresh'):
+            sys.path.append('\modules') #access modules folder
+
             date = strftime("%H:%M:%S on %Y-%m-%d", gmtime())
-            import gnews
+            #import gnews
             import portfolio_news
             st.text(f'Last refreshed: {date}')
 
     st.text("")
     st.text("")
 
-
     if option == 'News':
         #import gnews #pull global news from data file,  get s&p500, nasdaq, djia, vix
-        root_dir = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
-
-        st.text(root_dir)
+        #sys.path.insert(0, f'{mod_dir}')
+        sys.path.append('\modules') #access modules folder
 
         #overall_body_score = gnews.view_gnews_sentiment()
         #st.text('Overall market sentiment score*: ', overall_body_score)
@@ -86,7 +85,7 @@ def main():
 
         st.text('To Do')
 
-        #import portfolio_news #run module to ensure functions imported
+        import portfolio_news #run module to ensure functions imported
         #run view data function from portfolio news module
         #df_news, df_sentiment = portfolio_news.view_porfolio_sentiment()
         #st.dataframe(df_news)
