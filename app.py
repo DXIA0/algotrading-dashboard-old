@@ -5,7 +5,7 @@
 import streamlit as st
 import pandas as pd
 import requests
-import tweepy
+#import tweepy
 import pandas as pd
 import sys
 import os
