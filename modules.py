@@ -87,6 +87,8 @@ def filter_yahoofin(candidates):
     if acceptable_float_size(flt2):
       passed_candidates.append((candidate,flt))
   return passed_candidates
+
+
 def display(cds):
   if len(cds) == 0:
     return "No tickers match your criterias at the moment.."
