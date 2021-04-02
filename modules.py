@@ -31,11 +31,13 @@ def print_criterias():
   print('Max Last: ${}'.format(MAX_LAST))
   print('Float between: {:,} < x < {:,}'.format(FLOAT_BTW[0],FLOAT_BTW[1]))
   print('Minimum volume: {:,}'.format(MIN_VOLUME))
+
 def acceptable_float_size(flt):
   if flt > FLOAT_BTW[0] and flt < FLOAT_BTW[1]:
     return True
   else:
     return False
+
 def flt_str_to_int(flt):
   flt = flt.lower()
   if 'k' in flt: # thousand
@@ -44,15 +46,18 @@ def flt_str_to_int(flt):
     return int(float(flt[:-1])*1000000)
   else: # billion
     return int(float(flt[:-1])*1000000000)
+
 def print_time_now():
   time_now = str(datetime.datetime.now())[:-7]
   print('\n{}{} {}(delayed 15 mins, stops when market opens)'.format(RED,time_now,WHITE))
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
+
 def soup_maker(s):
   req = Request(url=s, headers=HEADERS)
   page = urlopen(req).read()
   soup = BeautifulSoup(page, 'html.parser')
   return soup
+
 def scrape_thestockmarketwatch():
   soup = soup_maker(QUOTE_PAGE)
   track_gainers = []
@@ -82,12 +87,10 @@ def filter_yahoofin(candidates):
       if td:
         if 'Float' in td.text and 'Short' not in td.text:
             flt = tr.find('td', {'class':'Fz(s) Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-
     flt2 = flt_str_to_int(flt)
     if acceptable_float_size(flt2):
       passed_candidates.append((candidate,flt))
   return passed_candidates
-
 
 def display(cds):
   if len(cds) == 0:
