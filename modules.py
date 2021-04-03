@@ -1,122 +1,57 @@
+#to do
+#1. implement another screener https://www.tradingview.com/screener/
+
 #https://towardsdatascience.com/making-a-stock-screener-with-python-4f591b198261
 # https://github.com/jacksonhorton/marketTrader
 # pre and post market stats https://github.com/ivanstruk/Backtesting-Pre-Market-Price-Action
 # source https://iexcloud.io/docs/api/#chart
 
-from urllib.request import urlopen, Request
-from bs4 import BeautifulSoup
-import texttable as tt
-import datetime, time
 
-PERIOD = 30 # seconds per refresh
-GAINS_PERCENT = 10 # at least how many percent gain
-MAX_LAST = 10 # maximum price
-FLOAT_BTW = [2000000,15000000] # size of float
-MIN_VOLUME = 50000 # minimum volume
+################################################
+########## Premarket Gappers ###################
+################################################
 
-YAHOO_FIN = 'https://finance.yahoo.com/quote/{}/key-statistics?p={}'
-QUOTE_PAGE = 'http://thestockmarketwatch.com/markets/pre-market/today.aspx'
-#QUOTE_PAGE2= 'https://marketchameleon.com/Reports/PremarketTrading'
-GRAY = '\033[1;30;40m'
-RED = '\033[1;31;40m'
-GREEN = '\033[1;32;40m'
-YELLOW = '\033[1;33;40m'
-BLUE = '\033[1;34;40m'
-MAG = '\033[1;35;40m'
-CYAN = '\033[1;36;40m'
-WHITE = '\033[1;37;40m'
-# -------------------------------------------------------------
-def print_criterias():
-  print('Change% at least: {}%'.format(GAINS_PERCENT))
-  print('Max Last: ${}'.format(MAX_LAST))
-  print('Float between: {:,} < x < {:,}'.format(FLOAT_BTW[0],FLOAT_BTW[1]))
-  print('Minimum volume: {:,}'.format(MIN_VOLUME))
+import pandas as pd
+import requests
 
-def acceptable_float_size(flt):
-  if flt > FLOAT_BTW[0] and flt < FLOAT_BTW[1]:
-    return True
-  else:
-    return False
+def get_pregainers(gain_percent, max_last, min_volume):
+    #https://www.tradingview.com/screener/
 
-def flt_str_to_int(flt):
-  flt = flt.lower()
-  if 'k' in flt: # thousand
-    return int(float(flt[:-1])*1000)
-  elif 'm' in flt: # Million
-    return int(float(flt[:-1])*1000000)
-  else: # billion
-    return int(float(flt[:-1])*1000000000)
+    #gain_percent = 10 # at least how many percent gain
+    #max_last = 10 # maximum price
+    #min_volume = 50000 # minimum volume
 
-def print_time_now():
-  time_now = str(datetime.datetime.now())[:-7]
-  print('\n{}{} {}(delayed 15 mins, stops when market opens)'.format(RED,time_now,WHITE))
-HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
+    #float_range = [2000000,15000000] # size of float
+    #  if flt > FLOAT_BTW[0] and flt < FLOAT_BTW[1]:
+    #    return True
+    #  else:
+    #    return False
 
-def soup_maker(s):
-  req = Request(url=s, headers=HEADERS)
-  page = urlopen(req).read()
-  soup = BeautifulSoup(page, 'html.parser')
-  return soup
+    url = 'https://thestockmarketwatch.com/markets/pre-market/today.aspx'
+    header = {
+      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
+      "X-Requested-With": "XMLHttpRequest"
+    }
 
-def scrape_thestockmarketwatch():
-  soup = soup_maker(QUOTE_PAGE)
-  track_gainers = []
-  gainers = soup.find('table', {'id': 'tblMoversDesktop'})
-  for td in gainers.find_all('tr')[1:]:
-    perc = td.find('div', {'class':'chgUp'}).text[:-1]
-    last = td.find('div', {'class':'lastPrice'}).text[1:]
-    vol = td.find('td', {'class':'tdVolume'}).text
-    perc = float(perc)
-    last = float(last)
-    vol = int(vol)
-    if perc > GAINS_PERCENT and \
-       last < MAX_LAST and \
-       vol > MIN_VOLUME:
-      track_gainers.append(td)
-  return track_gainers
+    r = requests.get(url, headers=header)
 
-def filter_yahoofin(candidates):
-  passed_candidates = []
-  for candidate in candidates:
-    ticker = candidate.find('a', {'class':'symbol'}).text
-    yahoo_fin = YAHOO_FIN.format(ticker, ticker)
-    soup = soup_maker(yahoo_fin)
-    trs = soup.find_all('tr')
-    for tr in trs:
-      td = tr.find('td')
-      if td:
-        if 'Float' in td.text and 'Short' not in td.text:
-            flt = tr.find('td', {'class':'Fz(s) Fw(500) Ta(end) Pstart(10px) Miw(60px)'}).text
-    flt2 = flt_str_to_int(flt)
-    if acceptable_float_size(flt2):
-      passed_candidates.append((candidate,flt))
-  return passed_candidates
+    df_temp = pd.read_html(r.text) #fetch table from "thestockmarketwatch.com"
+    df_pregainers = df_temp[1]
 
-def display(cds):
-  if len(cds) == 0:
-    return "No tickers match your criterias at the moment.."
-  tab = tt.Texttable()
-  headings = ['Ticker','Name','Last','ChgUp','Float','Vol']
-  tab.header(headings)
-  for (c,flt) in cds:
-    chgUp = c.find('div', {'class':'chgUp'}).text
-    ticker = c.find('a', {'class':'symbol'}).text
-    coy_name = c.find('a', {'class':'company'}).text
-    volume = c.find('td', {'class':'tdVolume'}).text
-    last = c.find('div', {'class':'lastPrice'}).text
-    tab.add_row([ticker,coy_name,last,chgUp,flt,volume])
-  s = tab.draw()
-  return s
+    df_pregainers['%Chg'] = df_pregainers['%Chg'].str.strip('%') #reformat all percent
+    df_pregainers['%Chg'] = pd.to_numeric(df_pregainers['%Chg'])
+    df_pregainers['Last'] = df_pregainers['Last'].str.strip('$')
+    df_pregainers['Last'] = pd.to_numeric(df_pregainers['Last'])
+    df_pregainers['Volume'] = pd.to_numeric(df_pregainers['Volume'])
 
-# -------------------------------------------------------------
-old_display = ''
-while 1:
-  eligible_candidates = scrape_thestockmarketwatch()
-  passed_candidates = filter_yahoofin(eligible_candidates)
-  new_display = display(passed_candidates)
-  if new_display != old_display:
-    print_time_now()
-    print_criterias()
-    print(new_display)
-    old_display = new_display
-  time.sleep(PERIOD)
+    df_pregainers.rename(columns={"Last":"Last Price ($)", "%Chg":"Change (%)", "Symb":"Symbol"}, inplace=True) #rename columns
+
+    df_eligible_candidates = pd.DataFrame(columns = ["Change (%)", "Last Price ($)", "Symbol", "Company", "Volume"])
+
+    for index, row in df_pregainers.iterrows():
+        if row['Change (%)'] > gain_percent and                row['Last Price ($)'] < max_last and                row['Volume'] > min_volume:
+              df_eligible_candidates = df_eligible_candidates.append(row, ignore_index=True)
+        else:
+            pass
+
+    return df_eligible_candidates

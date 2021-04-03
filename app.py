@@ -45,13 +45,12 @@ def pull_stocktwits():
         st.write(message['created_at'], ': ', message['body'])
         st.text("") # add blank line to help readability
 
-
 st.set_page_config(layout="wide")
 
 def main():
 
     st.sidebar.title('Navigation')
-    option = st.sidebar.selectbox('Dashboard selection', ('News', 'Trading Bot', 'Search'))
+    option = st.sidebar.selectbox('Dashboard selection', ('Trading Bot', 'News', 'Search'))
 
     col1, col2, col3, col4 = st.beta_columns(4)
     with col1:
@@ -67,7 +66,7 @@ def main():
 
             date = strftime("%H:%M:%S on %Y-%m-%d", gmtime())
             #import gnews
-            import portfolio_news
+            #import portfolio_news
             st.text(f'Last refreshed: {date}')
 
     st.text("")
@@ -90,11 +89,33 @@ def main():
         #st.dataframe(df_sentiment)
 
 
-    #if  option == 'Trading':
-    if  option == 'Search':
+    if  option == 'Trading Bot':
+        import modules
+
+        st.header("Momentum Scanner Configuration")
+        st.text("*information delayed by 15 minutes")
+        st.text("")
+
+        col1, col2, col3 = st.beta_columns(3)
+        with col1:
+            gain_percent = st.number_input('Percentage Change')
+        with col2:
+            max_last = st.number_input('Maximum Price')
+        with col3:
+            min_volume = st.number_input('Minimum Volume, Default 50000') # minimum volume
+
+        df_eligible_candidates = modules.get_pregainers(gain_percent, max_last, min_volume)
+
+        st.text("")
+        st.text("Eligible Candidates")
+        st.dataframe(df_eligible_candidates)
+
         ##############
         #   Inputs   #
         ##############
+        st.text("")
+        st.text("")
+        st.header("Momentum Technical Analysis")
 
         col1, col2, col3 = st.beta_columns(3)
         with col1:
@@ -166,6 +187,9 @@ def main():
         # Data of recent days
         st.write('Recent data ')
         st.dataframe(df_stock_price.tail(10))
+
+    if  option == 'Search':
+        st.text("")
 
 
 if __name__ =='__main__':
