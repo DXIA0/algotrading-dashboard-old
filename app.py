@@ -50,7 +50,7 @@ st.set_page_config(layout="wide")
 def main():
 
     st.sidebar.title('Navigation')
-    option = st.sidebar.selectbox('Dashboard selection', ('Trading Bot', 'News', 'Search'))
+    option = st.sidebar.selectbox('Dashboard selection', ('Trading Bot', 'News', 'Technical Analysis'))
 
     col1, col2, col3, col4 = st.beta_columns(4)
     with col1:
@@ -92,30 +92,44 @@ def main():
     if  option == 'Trading Bot':
         import modules
 
-        st.header("Momentum Scanner Configuration")
-        st.text("*information delayed by 15 minutes")
-        st.text("")
+        st.header("Momentum Scanner")
 
         col1, col2, col3 = st.beta_columns(3)
         with col1:
-            gain_percent = st.number_input('Percentage Change')
+            #gain_percent = st.number_input('Percentage Change')
+            gain_percent = 0
+            st.text("*15 min delay")
         with col2:
-            max_last = st.number_input('Maximum Price')
+            #max_last = st.number_input('Maximum Price')
+            max_last = 11
+            st.text("Maximum Price $11")
         with col3:
-            min_volume = st.number_input('Minimum Volume, Default 50000') # minimum volume
+            #min_volume = st.number_input('Minimum Volume, Default 50000') # minimum volume
+            min_volume = 50e3
+            st.text("Minimum Volume 500k")
 
         df_eligible_candidates = modules.get_pregainers(gain_percent, max_last, min_volume)
 
+
         st.text("")
-        st.text("Eligible Candidates")
+        st.text("Top Premarket Gainers")
         st.dataframe(df_eligible_candidates)
 
+        st.text("")
+        st.text("")
+        st.text("Top Gainers")
+
+
+        st.text("")
+        st.text("")
+        st.header("Pattern Recognition")
+
+
+    if  option == 'Technical Analysis':
         ##############
         #   Inputs   #
         ##############
-        st.text("")
-        st.text("")
-        st.header("Momentum Technical Analysis")
+        st.header("Technical Analysis")
 
         col1, col2, col3 = st.beta_columns(3)
         with col1:
@@ -187,9 +201,6 @@ def main():
         # Data of recent days
         st.write('Recent data ')
         st.dataframe(df_stock_price.tail(10))
-
-    if  option == 'Search':
-        st.text("")
 
 
 if __name__ =='__main__':

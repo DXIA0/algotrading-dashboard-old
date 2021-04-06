@@ -1,18 +1,22 @@
 #to do
 #1. implement another screener https://www.tradingview.com/screener/
+# https://www.tradingview.com/screener/
+# https://thestockmarketwatch.com/markets/topstocks/
 
 #https://towardsdatascience.com/making-a-stock-screener-with-python-4f591b198261
 # https://github.com/jacksonhorton/marketTrader
 # pre and post market stats https://github.com/ivanstruk/Backtesting-Pre-Market-Price-Action
 # source https://iexcloud.io/docs/api/#chart
 
+import pandas as pd
+import requests
+import yfinance as yf
+import talib
+
 
 ################################################
 ########## Premarket Gappers ###################
 ################################################
-
-import pandas as pd
-import requests
 
 def get_pregainers(gain_percent, max_last, min_volume):
     #https://www.tradingview.com/screener/
@@ -55,3 +59,17 @@ def get_pregainers(gain_percent, max_last, min_volume):
             pass
 
     return df_eligible_candidates
+
+
+
+
+################################################
+########## Candlestick Patterns ################
+################################################
+
+#https://mrjbq7.github.io/ta-lib/func_groups/pattern_recognition.html
+
+yahoo_data = yf.download("SPY", start="2021-01-01", end="2021-04-06")
+
+#num_engulf = talib.CDLENGULFING(open, high, low, close)
+#num_morningstar = talib.CDLMORNINGSTAR(open, high, low, close, penetration=0) 
