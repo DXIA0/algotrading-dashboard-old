@@ -72,4 +72,4 @@ def get_pregainers(gain_percent, max_last, min_volume):
 yahoo_data = yf.download("SPY", start="2021-01-01", end="2021-04-06")
 
 #num_engulf = talib.CDLENGULFING(open, high, low, close)
-#num_morningstar = talib.CDLMORNINGSTAR(open, high, low, close, penetration=0) 
+#num_morningstar = talib.CDLMORNINGSTAR(open, high, low, close, penetration=0)
