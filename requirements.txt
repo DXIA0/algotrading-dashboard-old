@@ -16,6 +16,7 @@ lxml
 yfinance
 jupyterlab
 ta
+ta-lib
 fastapi
 uvicorn
 texttable

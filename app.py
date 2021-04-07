@@ -141,8 +141,11 @@ def main():
         #pattern_value = modules.patterns.get(f"{pattern}")
         #pattern_function = getattr(talib, pattern_value)
 
+        today = datetime.date.today()
+        start_date = today - datetime.timedelta(days=7)
+
         for symbol in premarket_symbols:
-            df = yf.download(symbol, start="2021-01-01", end="2021-04-07")
+            df = yf.download(symbol, start=start_date, end=today)
             st.subheader(symbol)
 
             for key, value in modules.patterns.items():

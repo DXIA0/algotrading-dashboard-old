@@ -4,8 +4,6 @@
 # pip install -r requirements.txt
 #conda create --name new --clone original
 
-
-
 '''https://stackoverflow.com/questions/66588446/python-web-scraping-how-do-i-avoid-scraping-duplicates-for-my-database
 
 https://stackoverflow.com/questions/62306020/prevent-duplicate-rows-in-mysql-database
@@ -15,28 +13,12 @@ https://stackoverflow.com/questions/41860250/scraping-dynamic-data-and-avoiding-
 https://stackoverflow.com/questions/61079969/when-storing-scrapy-results-to-database-how-to-avoid-storing-duplicates
 '''
 
-import os
-import sys
 
+import requests
+from bs4 import BeautifulSoup
 
-def get_filepath(filename):
-    root_dir = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
-    data_dir =  root_dir + '\modules\data'
-    file_path = os.path.join(data_dir, f'{filename}.csv')
-    return(file_path)
+url = "https://uk.finance.yahoo.com/quote/TSLA?p=TSLA&.tsrc=fin-srch"
+r = requests.get(url)
 
-
-#get_filepath('testname')
-
-root_dir = os.path.dirname(os.path.abspath(__file__)) # This is your Project Root
-mod_dir =  root_dir + '\modules'
-data_dir =  root_dir + '\modules\data'
-
-sys.path.insert(0, f'{mod_dir}') #change directory to access the module file
-
-#import modules and autorun
-#import gnews
-#import portfolio_news
-
-import pandas as pd
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
+web_content = BeautifulSoup(r.text, "lxlm")
+web_content = web_content.find("div", class_ = "")
