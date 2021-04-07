@@ -1,5 +1,5 @@
 #cd C:\Users\Xiao_D\Documents\GitHub\trading-dashboard
-
+# exp moving average, volume weighted average price, macd, rsi
 # https://python.plainenglish.io/building-a-simple-stock-screener-using-streamlit-and-python-plotly-library-a6f04a2e40f9
 
 import streamlit as st
