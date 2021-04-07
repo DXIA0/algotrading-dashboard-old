@@ -68,7 +68,7 @@ def get_pregainers(gain_percent, max_last, min_volume):
 ################################################
 
 #https://mrjbq7.github.io/ta-lib/func_groups/pattern_recognition.html
-
+#rising three, doji and three white soldiers
 yahoo_data = yf.download("SPY", start="2021-01-01", end="2021-04-06")
 
 #num_engulf = talib.CDLENGULFING(open, high, low, close)

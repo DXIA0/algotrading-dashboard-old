@@ -54,7 +54,7 @@ def main():
 
     col1, col2, col3, col4 = st.beta_columns(4)
     with col1:
-        st.title('Mantis Trading DX BW  /')
+        st.title('Project Mantis DX BW  /')
 
     with col2:
         st.title(option) #display dash name
