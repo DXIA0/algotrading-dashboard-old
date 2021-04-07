@@ -82,8 +82,6 @@ def main():
         #st.text("Overall market sentiment score*: ", overall_body_score)
         #st.text("*Based on last 24hr news (GoogleNews)")
 
-        st.text("To Do")
-
         #import portfolio_news #run module to ensure functions imported
         #run view data function from portfolio news module
         #df_news, df_sentiment = portfolio_news.view_porfolio_sentiment()
@@ -91,6 +89,16 @@ def main():
         #st.text("Finviz Headline Sentiment")
         #st.dataframe(df_sentiment)
 
+        col1, col2, col3 = st.beta_columns(3)
+        with col1:
+            st.image("https://finviz.com/futures_charts.ashx?t=YM")
+            st.image("https://finviz.com/futures_charts.ashx?t=ES&p=d1")
+        with col2:
+            st.image("https://finviz.com/futures_charts.ashx?t=NQ&p=d1")
+            st.image("https://finviz.com/futures_charts.ashx?t=VX&p=d1")
+        with col3:
+            st.image("https://finviz.com/futures_charts.ashx?t=ER2&p=d1")
+            st.image("https://finviz.com/futures_charts.ashx?t=EX&p=d1")
         ###############################################################################
 
     if  option == "Trading Bot":
@@ -142,14 +150,13 @@ def main():
                 result = pattern_function(df["Open"], df["High"], df["Low"], df["Close"])
                 last = result.tail(1).values[0] #get most recent data
 
-
                 if last != 0:
-                    st.text(key, value, pattern_function)
-                    st.text(last)
+                    st.text(key)
                 else:
-                    st.text("No pattern found")
+                    pass
 
-
+            st.image(f"https://finviz.com/chart.ashx?t={symbol}&ty=c&ta=1&p=d&s=l")
+            #https://finviz.com/futures_charts.ashx?t=YM
 
         ###############################################################################
 
